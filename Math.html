@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meth Maker!!!</title>
+    <style>
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #formula {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        #stuff {
+            color: yellow;
+            background-color: black;
+            text-align: center;
+            padding: 20px;
+        }
+        #stuff div {
+            text-align: center;
+        }
+        #answer {
+            padding: 10px;
+            border: 2px solid yellow;
+            background-color: black;
+            color: yellow;
+        }
+        #answer::placeholder {
+            color: yellow;
+            opacity: 0.5; /* Adjust the opacity to your liking */
+        }
+        #answer:focus {
+            outline: none; /* Remove the default focus outline */
+            border-color: orange; /* Change border color when focused */
+        }
+        #generate-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: yellow;
+            color: black;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #generate-button:hover {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body id="stuff">
+    <div>
+        <p>Math generator (waltur we have to cook)</p>
+        <input type="text" id="answer" placeholder="Enter first value">
+        <button id="generate-button" onclick="generateQuestion()">Generate Formula</button>
+        <p id="formula"></p>
+    </div>
+    <script src="math.js"></script>
+</body>
+</html>
