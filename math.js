@@ -49,30 +49,41 @@ function generate(numbr) {
 }
 
 function generateQuestion() {
-  let question;
-
+  let question,diff;
+  diff = document.getElementById("hard")
+  if (diff.value == 1){ 
+    while (!question || question.includes("undefined")) {
+      const mutiplier = Math.floor(Math.random() * 10 + 1);
+      const chance = Math.random();
+  
+      if (chance <= 0.1) { // 10% chance for each formula
+        currentvalue = generate(document.getElementById('answer').value * mutiplier);
+        lastnumber = document.getElementById('answer');
+        aye = generate(lastnumber.value * (mutiplier - 1));
+        question = `(${currentvalue}) - (${aye})`;
+      } else if (chance <= 0.2) { // Another 10% chance
+        currentvalue = generate(-document.getElementById('answer').value * (mutiplier - 1));
+        lastnumber = document.getElementById('answer');
+        aye = generate(lastnumber.value * mutiplier);
+        question = `(${currentvalue}) + (${aye})`;
+      } else if (chance <= 0.3) { // Another 10% chance
+        currentvalue = generate(document.getElementById('answer').value * mutiplier);
+        lastnumber = document.getElementById('answer');
+        aye = generate(lastnumber.value / mutiplier);
+        question = `(${currentvalue}) * (${aye})`;
+      }
+    }
+}else if(diff.value >= 2){
   while (!question || question.includes("undefined")) {
     const mutiplier = Math.floor(Math.random() * 10 + 1);
     const chance = Math.random();
-
-    if (chance <= 0.1) { // 10% chance for each formula
       currentvalue = generate(document.getElementById('answer').value * mutiplier);
       lastnumber = document.getElementById('answer');
       aye = generate(lastnumber.value * (mutiplier - 1));
-      question = `(${currentvalue}) - (${aye})`;
-    } else if (chance <= 0.2) { // Another 10% chance
-      currentvalue = generate(-document.getElementById('answer').value * (mutiplier - 1));
-      lastnumber = document.getElementById('answer');
-      aye = generate(lastnumber.value * mutiplier);
-      question = `(${currentvalue}) + (${aye})`;
-    } else if (chance <= 0.3) { // Another 10% chance
-      currentvalue = generate(document.getElementById('answer').value * mutiplier);
-      lastnumber = document.getElementById('answer');
-      aye = generate(lastnumber.value / mutiplier);
-      question = `(${currentvalue}) * (${aye})`;
-    }
+      aue = generate(lastnumber.value * mutiplier)
+      question = `(${aue} - ${currentvalue}) + (${aye})`;
   }
-
+}
   document.getElementById('formula').textContent = question;
 }
 
