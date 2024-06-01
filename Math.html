@@ -1,66 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meth Maker!!!</title>
-    <style>
-        body {
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        #formula {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        #stuff {
-            color: yellow;
-            background-color: black;
-            text-align: center;
-            padding: 20px;
-        }
-        #stuff div {
-            text-align: center;
-        }
-        #answer {
-            padding: 10px;
-            border: 2px solid yellow;
-            background-color: black;
-            color: yellow;
-        }
-        #answer::placeholder {
-            color: yellow;
-            opacity: 0.5; /* Adjust the opacity to your liking */
-        }
-        #answer:focus {
-            outline: none; /* Remove the default focus outline */
-            border-color: orange; /* Change border color when focused */
-        }
-        #generate-button {
-            padding: 10px 20px;
-            border: none;
-            background-color: yellow;
-            color: black;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        #generate-button:hover {
-            background-color: orange;
-        }
-    </style>
-</head>
-<body id="stuff">
-    <div>
-        <p>Math generator (waltur we have to cook)</p>
-        <input type="text" id="answer" placeholder="Enter first value">
-        <button id="generate-button" onclick="generateQuestion()">Generate Formula</button>
-        <p id="formula"></p>
-    </div>
-    <script src="math.js"></script>
-</body>
-</html>
+let num1, num2, operator, value,currentvalue,lastnumber,aye;
+
+function generate(numbr) {
+  const answer = numbr;
+  value = parseFloat(answer);
+
+  if (isNaN(value)) {
+    alert('Please enter a valid number');
+    return;
+  }
+
+  const operators = ['+', '-', '*', '/'];
+  operator = operators[Math.floor(Math.random() * operators.length)];
+
+  if (operator === '+') {
+    num1 = Math.floor(Math.random() * value);
+    num2 = value - num1;
+  } else if (operator === '-') {
+    num1 = value + Math.floor(Math.random() * value);
+    num2 = num1 - value;
+  } else if (operator === '*') {
+    num1 = Math.floor(Math.random() * Math.sqrt(value));
+    num2 = value / num1;
+    if (num2 === 0 || !isFinite(num2) || !isFinite(num1)) {
+      generateQuestion();
+      return;
+    }
+  } else if (operator === '/') {
+    num1 = value * Math.floor(Math.random() * 10 + 1); // Ensure num1 is not zero
+    num2 = num1 / value;
+    if (num2 === 0 || !isFinite(num2) || !isFinite(num1)) {
+      generateQuestion();
+      return;
+    }
+  }
+
+  let question = '';
+
+  if (operator === '+') {
+    question = `${num1} + ${num2}`;
+  } else if (operator === '-') {
+    question = `${num1} - ${num2}`;
+  } else if (operator === '*') {
+    question = `${num1} * ${num2}`;
+  } else if (operator === '/') {
+    question = `${num1} / ${num2}`;
+  }
+   return question
+}
+
+function generateQuestion() {
+  let question,diff;
+  diff = document.getElementById("hard")
+  if (diff.value == 1){ 
+    while (!question || question.includes("undefined")) {
+      const mutiplier = Math.floor(Math.random() * 10 + 1);
+      const chance = Math.random();
+  
+      if (chance <= 0.1) { // 10% chance for each formula
+        currentvalue = generate(document.getElementById('answer').value * mutiplier);
+        lastnumber = document.getElementById('answer');
+        aye = generate(lastnumber.value * (mutiplier - 1));
+        question = `(${currentvalue}) - (${aye})`;
+      } else if (chance <= 0.2) { // Another 10% chance
+        currentvalue = generate(-document.getElementById('answer').value * (mutiplier - 1));
+        lastnumber = document.getElementById('answer');
+        aye = generate(lastnumber.value * mutiplier);
+        question = `(${currentvalue}) + (${aye})`;
+      } else if (chance <= 0.3) { // Another 10% chance
+        currentvalue = generate(document.getElementById('answer').value * mutiplier);
+        lastnumber = document.getElementById('answer');
+        aye = generate(lastnumber.value / mutiplier);
+        question = `(${currentvalue}) * (${aye})`;
+      }
+    }
+}else if(diff.value >= 2){
+  while (!question || question.includes("undefined")) {
+    const mutiplier = Math.floor(Math.random() * 10 + 1);
+    const chance = Math.random();
+      currentvalue = generate(document.getElementById('answer').value * mutiplier);
+      lastnumber = document.getElementById('answer');
+      aye = generate(lastnumber.value * (mutiplier - 1));
+      aue = generate(lastnumber.value * mutiplier)
+      question = `(${aue} - ${currentvalue}) + (${aye})`;
+  }
+}
+  document.getElementById('formula').textContent = question;
+}
+
